@@ -12,7 +12,28 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSpr
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Boss, function (sprite, otherSprite) {
     _boss_blood += -1
 })
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    _boss = sprites.create(assets.image`boss`, SpriteKind.Boss)
+    _boss_blood = 100
+    _boss.setPosition(160, 20)
+    _boss1 = sprites.create(assets.image`boss2`, SpriteKind.Boss)
+    _boss_blood = 1000
+    _boss1.setPosition(160, 60)
+    if (_boss_blood <= 0) {
+        info.setScore(10000000000000000)
+        info.setLife(10000000000000000)
+        _boss1.destroy()
+    }
+    _boss2 = sprites.create(assets.image`boss3`, SpriteKind.Boss)
+    _boss_blood = 10000
+    _boss2.setPosition(160, 100)
+    if (_boss_blood <= 0) {
+        info.setScore(10000000000000000)
+        info.setLife(10000000000000000)
+        _boss2.destroy()
+    }
+})
+controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
     if (info.score() > 0) {
         player_exp = sprites.createProjectileFromSprite(assets.image`player_exp`, player_plane, 100, 0)
         player_exp.setFlag(SpriteFlag.AutoDestroy, true)
@@ -41,32 +62,11 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
         info.setScore(10000)
     }
 })
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    _boss = sprites.create(assets.image`boss`, SpriteKind.Boss)
-    _boss_blood = 100
-    _boss.setPosition(160, 20)
-    _boss1 = sprites.create(assets.image`boss2`, SpriteKind.Boss)
-    _boss_blood = 1000
-    _boss1.setPosition(160, 60)
-    if (_boss_blood <= 0) {
-        info.setScore(10000000000000000)
-        info.setLife(10000000000000000)
-        _boss1.destroy()
-    }
-    _boss2 = sprites.create(assets.image`boss3`, SpriteKind.Boss)
-    _boss_blood = 10000
-    _boss2.setPosition(160, 100)
-    if (_boss_blood <= 0) {
-        info.setScore(10000000000000000)
-        info.setLife(10000000000000000)
-        _boss2.destroy()
-    }
-})
+let _2nd_plane: Sprite = null
+let player_exp: Sprite = null
 let _boss2: Sprite = null
 let _boss1: Sprite = null
 let _boss: Sprite = null
-let _2nd_plane: Sprite = null
-let player_exp: Sprite = null
 let player_plane: Sprite = null
 let _boss_blood = 0
 let b = 0
