@@ -4,6 +4,35 @@ enum RadioMessage {
 namespace SpriteKind {
     export const Boss = SpriteKind.create()
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (boss == 0) {
+        _boss = sprites.create(assets.image`boss`, SpriteKind.Boss)
+        _boss_blood = 100
+        for (let index = 0; index < 10000; index++) {
+            _boss.setPosition(randint(0, 160), randint(0, 120))
+            pause(500)
+        }
+        boss = 1
+    }
+    if (boss == 1) {
+        _boss1 = sprites.create(assets.image`boss2`, SpriteKind.Boss)
+        _boss_blood = 1000
+        for (let index = 0; index < 10000; index++) {
+            _boss1.setPosition(randint(0, 160), randint(0, 120))
+            pause(500)
+        }
+        boss = 2
+    }
+    if (boss == 2) {
+        _boss2 = sprites.create(assets.image`boss3`, SpriteKind.Boss)
+        _boss_blood = 10000
+        for (let index = 0; index < 10000; index++) {
+            _boss2.setPosition(randint(0, 160), randint(0, 120))
+            pause(500)
+        }
+        boss = 3
+    }
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSprite) {
     info.changeLifeBy(-3)
     scene.cameraShake(4, 100)
@@ -18,36 +47,6 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         player_exp.setFlag(SpriteFlag.AutoDestroy, true)
         info.changeScoreBy(-1)
     }
-})
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (boss == 0) {
-        _boss = sprites.create(assets.image`boss`, SpriteKind.Boss)
-        _boss_blood = 100
-        for (let index = 0; index < 10000; index++) {
-            _boss.setPosition(randint(0, 160), randint(0, 120))
-            pause(500)
-        }
-        boss = 1
-    }
-    if (boss == 1) {
-        _boss = sprites.create(assets.image`boss2`, SpriteKind.Boss)
-        _boss_blood = 1000
-        for (let index = 0; index < 10000; index++) {
-            _boss.setPosition(randint(0, 160), randint(0, 120))
-            pause(500)
-        }
-        boss = 2
-    }
-    if (boss == 2) {
-        _boss = sprites.create(assets.image`boss3`, SpriteKind.Boss)
-        _boss_blood = 10000
-        for (let index = 0; index < 10000; index++) {
-            _boss.setPosition(randint(0, 160), randint(0, 120))
-            pause(500)
-        }
-        boss = 3
-    }
-    boss = game.askForNumber("Boss?(0,1,2)")
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     info.changeScoreBy(1)
@@ -72,8 +71,10 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 let _2nd_plane: Sprite = null
-let _boss: Sprite = null
 let player_exp: Sprite = null
+let _boss2: Sprite = null
+let _boss1: Sprite = null
+let _boss: Sprite = null
 let player_plane: Sprite = null
 let _boss_blood = 0
 let boss = 0
@@ -92,9 +93,24 @@ forever(function () {
     if (_boss_blood <= 0) {
         info.setScore(10000000000000000)
         info.setLife(10000000000000000)
-        effects.clearParticles(_boss)
         _boss.destroy()
-        _boss_blood = 1
+        _boss1 = sprites.create(assets.image`boss2`, SpriteKind.Boss)
+        _boss_blood = 1000
+        for (let index = 0; index < 10000; index++) {
+            _boss1.setPosition(randint(0, 160), randint(0, 120))
+            pause(500)
+        }
+        boss = 2
+        _boss1.destroy()
+        _boss2 = sprites.create(assets.image`boss3`, SpriteKind.Boss)
+        _boss_blood = 10000
+        for (let index = 0; index < 10000; index++) {
+            _boss2.setPosition(randint(0, 160), randint(0, 120))
+            pause(500)
+        }
+        boss = 3
+        _boss2.destroy()
+        game.over(true, effects.confetti)
     }
 })
 game.onUpdateInterval(2000, function () {
