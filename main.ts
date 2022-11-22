@@ -12,6 +12,13 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSpr
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Boss, function (sprite, otherSprite) {
     _boss_blood += -1
 })
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (info.score() > 0) {
+        player_exp = sprites.createProjectileFromSprite(assets.image`player_exp`, player_plane, 100, 0)
+        player_exp.setFlag(SpriteFlag.AutoDestroy, true)
+        info.changeScoreBy(-1)
+    }
+})
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     _boss = sprites.create(assets.image`boss`, SpriteKind.Boss)
     _boss_blood = 100
@@ -63,10 +70,10 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 let _2nd_plane: Sprite = null
-let player_exp: Sprite = null
 let _boss2: Sprite = null
 let _boss1: Sprite = null
 let _boss: Sprite = null
+let player_exp: Sprite = null
 let player_plane: Sprite = null
 let _boss_blood = 0
 let b = 0
