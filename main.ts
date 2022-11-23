@@ -7,10 +7,10 @@ namespace SpriteKind {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSprite) {
     info.changeLifeBy(-3)
     scene.cameraShake(4, 100)
-    _boss_blood += -1
+    _boss_blood += -5
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Boss, function (sprite, otherSprite) {
-    _boss_blood += -1
+    _boss_blood += -5
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (info.score() > 0) {
@@ -54,6 +54,13 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
         boss += 1
     }
 })
+controller.B.onEvent(ControllerButtonEvent.Repeated, function () {
+    if (b == 0) {
+        b = 1
+        info.setLife(10000)
+        info.setScore(10000)
+    }
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     info.changeLifeBy(-1)
     for (let index = 0; index < 5; index++) {
@@ -61,13 +68,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         boss += 1
     }
     scene.cameraShake(4, 100)
-})
-controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (b == 0) {
-        b = 1
-        info.setLife(10000)
-        info.setScore(10000)
-    }
 })
 let _2nd_plane: Sprite = null
 let _boss2: Sprite = null
