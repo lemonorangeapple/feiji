@@ -29,12 +29,16 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     }
     scene.cameraShake(4, 100)
 })
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    _boss = sprites.create(assets.image`boss`, SpriteKind.Boss)
+})
 controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
     player_exp = sprites.createProjectileFromSprite(assets.image`player_exp`, player_plane, 100, 0)
     player_exp.setFlag(SpriteFlag.AutoDestroy, true)
 })
 let _2nd_plane: Sprite = null
 let player_exp: Sprite = null
+let _boss: Sprite = null
 let player_plane: Sprite = null
 game.showLongText("帮助：按a发射炮弹，长按a发射激光，目标击败BOSS！左上角是你的生命值，右上角是BOSS的生命值", DialogLayout.Full)
 let b = 1
@@ -46,7 +50,7 @@ player_plane = sprites.create(assets.image`player_plane`, SpriteKind.Player)
 player_plane.setStayInScreen(true)
 player_plane.setPosition(0, 60)
 controller.moveSprite(player_plane)
-let _boss = sprites.create(assets.image`boss`, SpriteKind.Boss)
+_boss = sprites.create(assets.image`boss`, SpriteKind.Boss)
 _boss.setPosition(160, 60)
 forever(function () {
     if (_boss_blood <= 0) {
