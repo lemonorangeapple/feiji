@@ -5,19 +5,17 @@ enum RadioMessage {
 namespace SpriteKind {
     export const Boss = SpriteKind.create()
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSprite) {
+    music.playSoundEffect(music.createSoundEffect(WaveShape.Square, 200, 1, 255, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Curve), SoundExpressionPlayMode.InBackground)
+    info.changeLifeBy(-3)
+    scene.cameraShake(4, 100)
+    _boss_blood += -1
+})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Boss, function (sprite, otherSprite) {
     music.playSoundEffect(music.createSoundEffect(WaveShape.Square, 200, 1, 255, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Curve), SoundExpressionPlayMode.InBackground)
     _boss_blood += -1
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    player_exp = sprites.createProjectileFromSprite(assets.image`player_exp`, player_plane, 100, 0)
-    music.playSoundEffect(music.createSoundEffect(WaveShape.Noise, 3900, 3500, 255, 0, 10, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.InBackground)
-    player_exp.setFlag(SpriteFlag.AutoDestroy, true)
-})
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    _boss_blood += _boss_blood
-})
-controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
     player_exp = sprites.createProjectileFromSprite(assets.image`player_exp`, player_plane, 100, 0)
     music.playSoundEffect(music.createSoundEffect(WaveShape.Noise, 3900, 3500, 255, 0, 10, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.InBackground)
     player_exp.setFlag(SpriteFlag.AutoDestroy, true)
@@ -36,11 +34,13 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     }
     scene.cameraShake(4, 100)
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSprite) {
-    music.playSoundEffect(music.createSoundEffect(WaveShape.Square, 200, 1, 255, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Curve), SoundExpressionPlayMode.InBackground)
-    info.changeLifeBy(-3)
-    scene.cameraShake(4, 100)
-    _boss_blood += -1
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    _boss_blood += _boss_blood
+})
+controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
+    player_exp = sprites.createProjectileFromSprite(assets.image`player_exp`, player_plane, 100, 0)
+    music.playSoundEffect(music.createSoundEffect(WaveShape.Noise, 3900, 3500, 255, 0, 10, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.InBackground)
+    player_exp.setFlag(SpriteFlag.AutoDestroy, true)
 })
 let _2nd_plane: Sprite = null
 let player_exp: Sprite = null
@@ -58,12 +58,6 @@ player_plane.setPosition(0, 60)
 controller.moveSprite(player_plane)
 let _boss = sprites.create(assets.image`boss`, SpriteKind.Boss)
 _boss.setPosition(160, 60)
-game.onUpdateInterval(2000, function () {
-    _2nd_plane = sprites.create(assets.image`2nd_plane`, SpriteKind.Enemy)
-    _2nd_plane.setPosition(135, randint(0, 120))
-    _2nd_plane.setVelocity(-50, 0)
-    _2nd_plane.setFlag(SpriteFlag.AutoDestroy, true)
-})
 forever(function () {
     music.playSoundEffect(music.createSoundEffect(WaveShape.Sine, 200, 600, 255, 0, 150, SoundExpressionEffect.None, InterpolationCurve.Linear), SoundExpressionPlayMode.InBackground)
     _boss.setPosition(randint(0, 160), randint(0, 120))
@@ -76,4 +70,10 @@ forever(function () {
 })
 forever(function () {
     info.setScore(_boss_blood)
+})
+game.onUpdateInterval(2000, function () {
+    _2nd_plane = sprites.create(assets.image`2nd_plane`, SpriteKind.Enemy)
+    _2nd_plane.setPosition(135, randint(0, 120))
+    _2nd_plane.setVelocity(-50, 0)
+    _2nd_plane.setFlag(SpriteFlag.AutoDestroy, true)
 })
