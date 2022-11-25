@@ -6,7 +6,7 @@ namespace SpriteKind {
     export const Boss = SpriteKind.create()
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Boss, function (sprite, otherSprite) {
-    music.playSoundEffect(music.createSoundEffect(WaveShape.Sine, 300, 200, 255, 0, 75, SoundExpressionEffect.Vibrato, InterpolationCurve.Logarithmic), SoundExpressionPlayMode.InBackground)
+    music.playSoundEffect(music.createSoundEffect(WaveShape.Square, 200, 1, 255, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Curve), SoundExpressionPlayMode.InBackground)
     _boss_blood += -1
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -23,13 +23,13 @@ controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
     player_exp.setFlag(SpriteFlag.AutoDestroy, true)
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    music.playSoundEffect(music.createSoundEffect(WaveShape.Sine, 300, 200, 255, 0, 75, SoundExpressionEffect.None, InterpolationCurve.Logarithmic), SoundExpressionPlayMode.InBackground)
+    music.playSoundEffect(music.createSoundEffect(WaveShape.Square, 200, 1, 255, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Curve), SoundExpressionPlayMode.InBackground)
     for (let index = 0; index < 5; index++) {
         _2nd_plane.destroy()
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    music.playSoundEffect(music.createSoundEffect(WaveShape.Sine, 300, 200, 255, 0, 75, SoundExpressionEffect.None, InterpolationCurve.Logarithmic), SoundExpressionPlayMode.InBackground)
+    music.playSoundEffect(music.createSoundEffect(WaveShape.Square, 200, 1, 255, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Curve), SoundExpressionPlayMode.InBackground)
     info.changeLifeBy(-1)
     for (let index = 0; index < 5; index++) {
         _2nd_plane.destroy()
@@ -37,7 +37,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     scene.cameraShake(4, 100)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Boss, function (sprite, otherSprite) {
-    music.playSoundEffect(music.createSoundEffect(WaveShape.Sine, 300, 200, 255, 0, 75, SoundExpressionEffect.Vibrato, InterpolationCurve.Logarithmic), SoundExpressionPlayMode.InBackground)
+    music.playSoundEffect(music.createSoundEffect(WaveShape.Square, 200, 1, 255, 0, 100, SoundExpressionEffect.None, InterpolationCurve.Curve), SoundExpressionPlayMode.InBackground)
     info.changeLifeBy(-3)
     scene.cameraShake(4, 100)
     _boss_blood += -1
