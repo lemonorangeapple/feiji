@@ -1,14 +1,11 @@
 name: MakeCode Arcade Release
-
 on: 
   release:
     types:
       - created
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [8.x]
